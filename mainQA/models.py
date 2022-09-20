@@ -23,7 +23,8 @@ class Question(models.Model):
   dateCreated = models.DateTimeField(default=timezone.now)
   createdBy = models.CharField(default="Anonymous",max_length=100)
 
+  # also, the questions should have numbers attached to the event code.
 
   def __str__(self):
     displayShort = self.eventCode.eventCode + ": " + self.questionText[0:20] + '...'
-    return displayShort  #work on this and return maybe the first 30 characters followed with trailing dots...
+    return displayShort
