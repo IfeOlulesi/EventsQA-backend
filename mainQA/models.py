@@ -7,7 +7,7 @@ class Event(models.Model):
   name = models.CharField(max_length=50)
   eventCode = models.CharField(max_length=20)
   desc = models.CharField(max_length=300)
-  dateCreated = models.DateTimeField(default=timezone.now)
+  dateCreated = models.DateTimeField(auto_now_add=True)
   createdBy = models.ForeignKey(User, on_delete=models.CASCADE)
   location = models.CharField(max_length=100)
   isAcceptingQuestions = models.BooleanField()
@@ -20,7 +20,7 @@ class Event(models.Model):
 class Question(models.Model):
   questionText = models.TextField()
   eventCode = models.ForeignKey(Event, on_delete=models.CASCADE) #this guy still points to the model, and not the event code
-  dateCreated = models.DateTimeField(default=timezone.now)
+  dateCreated = models.DateTimeField(auto_now_add=True)
   createdBy = models.CharField(default="Anonymous",max_length=100)
 
   # also, the questions should have numbers attached to the event code.

@@ -4,6 +4,7 @@ from .serializers import EventSerializer, QuestionSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+# from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -15,15 +16,25 @@ def events_list(request):
     serializer = EventSerializer(allEvents, many=True)
     return JsonResponse({'events': serializer.data})
 
-  elif request.method == 'POST':
+
+  if request.method == 'POST':
     serializer = EventSerializer(data=request.data)
     if serializer.is_valid():
       serializer.save()
       return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+# @csrf_exempt
+@api_view(['GET', 'POST'])
 def questions_list(request):
-  allQuestions = Question.objects.all()
-  serializer = QuestionSerializer(allQuestions, many=True)
-  
-  return JsonResponse({'questions': serializer.data})
+  if request.method == 'GET':
+    allQuestions = Question.objects.all()
+    serializer = QuestionSerializer(allQuestions, many=True)
+    return JsonResponse({'questions': serializer.data})
+
+
+  if request.method == 'POST':
+    serializer = QuestionSerializer(data=request.data)
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data, status=status.HTTP_201_CREATED)
