@@ -1,11 +1,18 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
+import string
 
 # Create your models here.
+
+def ec_gen():
+  ec = get_random_string(6, allowed_chars=string.ascii_uppercase + string.digits)
+  return ec
+
+
 class Event(models.Model):
   name = models.CharField(max_length=50)
-  eventCode = models.CharField(max_length=20)
+  eventCode = models.CharField(max_length=6, default=ec_gen)
   desc = models.CharField(max_length=300)
   dateCreated = models.DateTimeField(auto_now_add=True)
   createdBy = models.ForeignKey(User, on_delete=models.CASCADE)
