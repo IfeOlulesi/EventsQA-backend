@@ -10,4 +10,6 @@ class EventSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
   class Meta:
     model = Question
-    fields = ['id', 'questionText', 'eventCode', 'dateCreated', 'createdBy']
+    fields = ['id', 'questionText', 'parentEvent', 'dateCreated', 'createdBy']
+
+    

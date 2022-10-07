@@ -24,14 +24,20 @@ class Event(models.Model):
     return self.name
 
 
+# def questionECAllocator(eventId):
+#   event = Event.objects.get(id=eventId)
+#   return event.eventCode
+
+
 class Question(models.Model):
   questionText = models.TextField()
-  eventCode = models.ForeignKey(Event, on_delete=models.CASCADE) #this guy still points to the model, and not the event code
+  parentEvent = models.ForeignKey(Event, on_delete=models.CASCADE) #this guy still points to the model, and not the event code
+  # eventCode = models.CharField(max_length=6, default=questionECAllocator(eventId)) #CONTROVERSIAL
   dateCreated = models.DateTimeField(auto_now_add=True)
   createdBy = models.CharField(default="Anonymous",max_length=100)
 
   # also, the questions should have numbers attached to the event code.
 
   def __str__(self):
-    displayShort = self.eventCode.eventCode + ": " + self.questionText[0:20] + '...'
+    displayShort = self.parentEvent.eventCode + ": " + self.questionText[0:20] + '...'
     return displayShort

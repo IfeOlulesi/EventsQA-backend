@@ -87,3 +87,19 @@ def questions_detail(request, id, format=None):
   elif request.method == "DELETE":
     target_question.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def questions_by_eventId(request, format=None):
+  eventQuestions = Question.objects.filter(parentEvent = request.data['eventId'])
+  
+  if request.method == "GET":
+    if len(eventQuestions) < 1:
+      return Response(status=status.HTTP_404_NOT_FOUND)
+    else:
+      serializer = QuestionSerializer(eventQuestions, many=True)  
+      return Response(serializer.data)
+
+  # elif request.method == "POST":
+  #   serializer = QuestionSerializer(targetQuestion, many=True)  
+  #   return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)

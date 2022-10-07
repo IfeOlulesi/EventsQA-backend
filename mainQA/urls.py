@@ -13,6 +13,8 @@ urlpatterns = [
   path('questions/', views.questions_list),
 
   path('questions/<int:id>', views.questions_detail),
+
+  path('getQuestionsByEventCode/', views.questions_by_eventId),
 ]
 
 
