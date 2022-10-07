@@ -91,7 +91,8 @@ def questions_detail(request, id, format=None):
 
 @api_view(['GET'])
 def questions_by_eventId(request, format=None):
-  eventQuestions = Question.objects.filter(parentEvent = request.data['eventId'])
+  if request.data['eventId']:
+    eventQuestions = Question.objects.filter(parentEvent = request.data['eventId'])
   
   if request.method == "GET":
     if len(eventQuestions) < 1:
@@ -100,6 +101,3 @@ def questions_by_eventId(request, format=None):
       serializer = QuestionSerializer(eventQuestions, many=True)  
       return Response(serializer.data)
 
-  # elif request.method == "POST":
-  #   serializer = QuestionSerializer(targetQuestion, many=True)  
-  #   return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
