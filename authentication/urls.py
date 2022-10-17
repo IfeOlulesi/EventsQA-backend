@@ -1,21 +1,10 @@
 from django.urls import path
-from . import views
-# from rest_framework.urlpatterns import format_suffix_patterns
+from .views import RegisterAPI
+
 
 app_name = 'authentication'
 
 
 urlpatterns = [
-  path('login/', views.login),
-
-  # path('events/<int:id>', views.events_detail),
-
-  # path('questions/', views.questions_list),
-
-  # path('questions/<int:id>', views.questions_detail),
-
-  # path('getQuestionsByEventCode/', views.questions_by_eventId),
+  path('register/', RegisterAPI.as_view(), name='register'),
 ]
-
-
-# urlpatterns = format_suffix_patterns(urlpatterns)

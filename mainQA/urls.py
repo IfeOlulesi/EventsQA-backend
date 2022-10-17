@@ -14,7 +14,7 @@ urlpatterns = [
 
   path('questions/<int:id>', views.questions_detail),
 
-  path('getQuestionsByEventCode/', views.questions_by_eventId),
+  path('getQuestionsByEventId/', views.questions_by_eventId),
 ]
 
 
