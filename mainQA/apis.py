@@ -1,12 +1,21 @@
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Event, Question
 from .serializers import EventSerializer, QuestionSerializer
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 
-# Create your views here.
 
+class WriteOnly(BasePermission):
+  def has_permission(self, request, view):
+    if request.method == "POST":
+      return True
+    else:
+      return False
+
+
+#Read all Events  | Create Single Event
 @api_view(['GET', 'POST'])
 def events_list(request, format=None):
 
@@ -22,9 +31,10 @@ def events_list(request, format=None):
       serializer.save()
       return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
-      return Response(status=status.HTTP_400_BAD_REQUEST)
+      return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
+#Read single event | Update single event  | Delete single event
 @api_view(['GET', 'PUT', 'DELETE'])
 def events_detail(request, id, format=None):
 
@@ -49,8 +59,10 @@ def events_detail(request, id, format=None):
     target_event.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
-# @csrf_exempt
+
+# Read all Questions | Create Single Question
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated|WriteOnly])
 def questions_list(request, format=None):
   if request.method == 'GET':
     allQuestions = Question.objects.all()
@@ -65,6 +77,7 @@ def questions_list(request, format=None):
       return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+#Get single question | Update single question | Delete single question
 @api_view(['GET', 'PUT', 'DELETE'])
 def questions_detail(request, id, format=None):
   try:
@@ -88,7 +101,7 @@ def questions_detail(request, id, format=None):
     target_question.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
-
+# Get Questions Belonging to A Single Event
 @api_view(['GET'])
 def questions_by_eventId(request, format=None):
   if request.data['eventId']:

@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
@@ -13,7 +14,7 @@ def ec_gen():
 class Event(models.Model):
   name = models.CharField(max_length=50)
   eventCode = models.CharField(max_length=6, default=ec_gen)
-  desc = models.CharField(max_length=300)
+  desc = models.CharField(max_length=300, default="")
   dateCreated = models.DateTimeField(auto_now_add=True)
   createdBy = models.ForeignKey(User, on_delete=models.CASCADE)
   location = models.CharField(max_length=100)
