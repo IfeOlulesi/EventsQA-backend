@@ -1,20 +1,20 @@
 from django.urls import path
-from . import views
+from . import apis
 from rest_framework.urlpatterns import format_suffix_patterns
 
 app_name = 'api/v1'
 
 
 urlpatterns = [
-  path('events/', views.events_list),
+  path('events/', apis.events_list),
 
-  path('events/<int:id>', views.events_detail),
+  path('events/<int:id>', apis.events_detail),
 
-  path('questions/', views.questions_list),
+  path('questions/', apis.questions_list),
 
-  path('questions/<int:id>', views.questions_detail),
+  path('questions/<int:id>', apis.questions_detail),
 
-  path('getQuestionsByEventId/', views.questions_by_eventId),
+  path('getQuestionsByEventId/', apis.questions_by_eventId),
 ]
 
 
