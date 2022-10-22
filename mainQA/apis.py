@@ -108,9 +108,9 @@ def questions_by_eventId(request, format=None):
     eventQuestions = Question.objects.filter(parentEvent = request.data['eventId'])
   
   if request.method == "GET":
-    if len(eventQuestions) < 1:
+    if len(eventQuestions) < 1:      # type: ignore
       return Response(status=status.HTTP_404_NOT_FOUND)
     else:
-      serializer = QuestionSerializer(eventQuestions, many=True)  
+      serializer = QuestionSerializer(eventQuestions, many=True)        # type: ignore
       return Response(serializer.data)
 

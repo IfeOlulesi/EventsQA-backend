@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third party apps
-    'rest_framework',
+    'drf_yasg',
     'knox',
+    'rest_framework',
+    'rest_framework_swagger', 
 
     # Local Apps
     'mainQA.apps.MainqaConfig',
@@ -136,5 +138,6 @@ REST_FRAMEWORK = {
   ],
   'DEFAULT_PERMISSION_CLASSES': [
     'rest_framework.permissions.IsAuthenticated',
-  ]
+  ],
+  'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
